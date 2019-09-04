@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2.4'
 services:
     redis:
         image: 'redis:5.0.5'
@@ -29,8 +29,10 @@ services:
             # - POSTGRES_PASSWORD=airflow
             # - POSTGRES_DB=airflow
             # - REDIS_PASSWORD=redispass
-        volumes:
-            - ./dags:/usr/local/airflow/dags
+        volumes:            
+            - type: bind
+              source: ./dags
+              target: /usr/local/airflow/dags
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         ports:
@@ -60,7 +62,9 @@ services:
         depends_on:
             - webserver
         volumes:
-            - ./dags:/usr/local/airflow/dags
+            - type: bind
+              source: ./dags
+              target: /usr/local/airflow/dags
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         environment:
@@ -79,7 +83,9 @@ services:
         depends_on:
             - scheduler
         volumes:
-            - ./dags:/usr/local/airflow/dags
+            - type: bind
+              source: ./dags
+              target: /usr/local/airflow/dags
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         environment:
