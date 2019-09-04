@@ -2,10 +2,12 @@ version: '2.4'
 services:
     redis:
         image: 'redis:5.0.5'
+        restart: always
         # command: redis-server --requirepass redispass
 
     postgres:
         image: postgres:9.6
+        restart: always
         environment:
             - POSTGRES_USER=airflow
             - POSTGRES_PASSWORD=airflow
@@ -30,9 +32,7 @@ services:
             # - POSTGRES_DB=airflow
             # - REDIS_PASSWORD=redispass
         volumes:            
-            - type: bind
-              source: ./dags
-              target: /usr/local/airflow/dags
+            - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         ports:
@@ -62,9 +62,7 @@ services:
         depends_on:
             - webserver
         volumes:
-            - type: bind
-              source: ./dags
-              target: /usr/local/airflow/dags
+            - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         environment:
@@ -83,9 +81,7 @@ services:
         depends_on:
             - scheduler
         volumes:
-            - type: bind
-              source: ./dags
-              target: /usr/local/airflow/dags
+            - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         environment:

@@ -4,7 +4,7 @@ http://airflow.readthedocs.org/en/latest/tutorial.html
 """
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
-from airflow.contrib.sensors.gcs_sensor import GoogleCloudStorageObjectUpdatedSensor
+from airflow.contrib.sensors.gcs_sensor import GoogleCloudStoragePrefixSensor
 from datetime import datetime, timedelta
 
 
@@ -32,3 +32,9 @@ t3 = BashOperator(
     params={"my_param": "Parameter I passed in"},
     dag=dag,
 )
+
+sense_gcs = GoogleCloudStoragePrefixSensor(
+    task_id='sense_openair',
+    bucket='ppmo-data_vangogh-231409',
+    prefix='OpenAir/processed/OpenAir_2019-08-20T112222Z.csv',
+    dag=dag)
