@@ -6,8 +6,8 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.contrib.sensors.gcs_sensor import GoogleCloudStoragePrefixSensor
 from airflow.operators.mysql_operator import MySqlOperator
-from airflow.operators import GoogleCloudStorageListOperator, postgres_operator
-from airflow.operators.custom import DataFlowJavaXcomKeysOperator
+from airflow.operators import DataFlowJavaXcomKeysOperator, GoogleCloudStorageListOperator, postgres_operator
+
 from datetime import datetime, timedelta
 import sys, os
 
