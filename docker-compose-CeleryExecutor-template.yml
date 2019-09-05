@@ -26,8 +26,7 @@ services:
         environment:
             - LOAD_EX=n
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
-            - EXECUTOR=Celery
-            - AIRFLOW_CONN_PPMO_MYSQL=mysql://ppmo-admin:DEVOTEAM@10.27.96.3:3306/ProjectTracker
+            - EXECUTOR=Celery            
             # - POSTGRES_USER=airflow
             # - POSTGRES_PASSWORD=airflow
             # - POSTGRES_DB=airflow
