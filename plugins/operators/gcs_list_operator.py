@@ -103,4 +103,5 @@ class GoogleCloudStorageListOperator(BaseOperator):
                          delimiter=self.delimiter)
         object = listed[0]
         full_path = 'gs://{bucket}/{object}'.format(bucket=bucket, object=object)
-        return full_path
+        context['task_instance'].xcom_push(key='open_air_input_file_path', value=full_path)
+        # return full_path

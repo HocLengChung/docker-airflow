@@ -45,12 +45,12 @@ truncate_mysql_table = MySqlOperator(
     database='ProjectTracker',
     dag=dag)
 
-# list_found_file = GoogleCloudStorageListOperator(
-#     task_id='list_found_file',
-#     bucket=bucket,
-#     prefix=prefix,
-#     dag=dag)
-# #
+list_found_file = GoogleCloudStorageListOperator(
+    task_id='list_found_file',
+    bucket=bucket,
+    prefix=prefix,
+    dag=dag)
+#
 load_dataflow = DataFlowJavaXcomKeysOperator(
         task_id='execute_dataflow',
         jar='gs://dataflow_vangogh-231409/ppmo_dataflow-bundled-1.0.jar',
