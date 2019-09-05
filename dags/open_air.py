@@ -6,9 +6,8 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.contrib.sensors.gcs_sensor import GoogleCloudStoragePrefixSensor
 from airflow.operators.mysql_operator import MySqlOperator
-from airflow.operators import DataFlowJavaXcomKeysOperator
-from airflow.operators import GoogleCloudStorageListOperator
-# from custom_operator.gcs_list_operator import GoogleCloudStorageListOperator
+from airflow.operators import DataFlowJavaXcomKeysOperator, GoogleCloudStorageListOperator, postgres_operator
+
 from datetime import datetime, timedelta
 import sys, os
 # try:
@@ -29,6 +28,12 @@ default_args = {
 }
 
 dag = DAG("open_air", default_args=default_args, schedule_interval='0 0 1 1 *')
+
+delete_xcom_task = postgres_operator.PostgresOperator(
+    task_id='delete-xcom-task',
+    postgres_conn_id='postgres_default',
+    sql="DELETE FROM xcom WHERE dag_id='{{ dag.dag_id }}'",
+    dag=dag)
 
 bucket = 'dataflow-staging-europe-west1-984164108593'
 prefix = 'OpenAir'
@@ -68,9 +73,9 @@ load_dataflow = DataFlowJavaXcomKeysOperator(
         dag=dag)
 
 
-
+delete_xcom_task >> list_found_file
 sense_gcs >> truncate_mysql_table
-# sense_gcs >> list_found_file
+sense_gcs >> list_found_file
 
 # except Exception as e:
 #     exc_type, exc_obj, exc_tb = sys.exc_info()
