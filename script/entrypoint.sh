@@ -26,6 +26,7 @@ export \
   AIRFLOW__CORE__LOAD_EXAMPLES \
   AIRFLOW__CORE__SQL_ALCHEMY_CONN \
 
+export GOOGLE_APPLICATION_CREDENTIALS="${AIRFLOW_USER_HOME}/vangogh-231409-732a35b7abf5.json"
 
 # Load DAGs exemples (default: Yes)
 if [[ -z "$AIRFLOW__CORE__LOAD_EXAMPLES" && "${LOAD_EX:=n}" == n ]]

@@ -72,6 +72,7 @@ RUN set -ex \
 
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
+COPY config/vangogh-231409-732a35b7abf5.json ${AIRFLOW_USER_HOME}/vangogh-231409-732a35b7abf5.json
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 ## JAVA INSTALLATION
@@ -84,16 +85,6 @@ RUN mkdir -p /usr/share/man/man1 && \
 RUN apt-get install unzip -y && \
     apt-get autoremove -y
 
-# Downloading gcloud package
-RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
-
-# Installing the package
-RUN mkdir -p /usr/local/gcloud \
-  && tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz \
-  && /usr/local/gcloud/google-cloud-sdk/install.sh
-
-# Adding the package path to local
-ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
 
 EXPOSE 8080 5555 8793
 
