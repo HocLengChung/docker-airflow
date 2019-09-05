@@ -37,7 +37,7 @@ services:
             - POSTGRES_DB=airflow
             - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
             - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-            - AIRFLOW_CONN_PPMO=mysql://ppmo-admin:DEVOTEAM@10.27.96.3:3306/ProjectTracker
+            - AIRFLOW__CONN_PPMO=mysql://ppmo-admin:DEVOTEAM@10.27.96.3:3306/ProjectTracker
         volumes:            
             - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
