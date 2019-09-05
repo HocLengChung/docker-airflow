@@ -10,6 +10,7 @@ from airflow.operators import DataFlowJavaXcomKeysOperator, GoogleCloudStorageLi
 
 from datetime import datetime, timedelta
 import sys, os
+
 # try:
 
 default_args = {
@@ -21,6 +22,12 @@ default_args = {
     "email_on_retry": False,
     "retries": 1,
     "retry_delay": timedelta(minutes=5),
+    'dataflow_default_options': {
+        'tempLocation': 'gs://dataflow-staging-europe-west1-984164108593/tmp/',
+        'project': 'vangogh-231409',
+        'region': 'europe-west1',
+        'zone': 'europe-west1-b'
+    }
     # 'queue': 'bash_queue',
     # 'pool': 'backfill',
     # 'priority_weight': 10,
@@ -57,25 +64,25 @@ list_found_file = GoogleCloudStorageListOperator(
     dag=dag)
 #
 load_dataflow = DataFlowJavaXcomKeysOperator(
-        task_id='execute_dataflow',
-        jar='gs://dataflow_vangogh-231409/ppmo_dataflow-bundled-1.0.jar',
-        options={
-            'numWorkers': '1',
-            'workerMachineType': 'n1-standard-2',
-            'autoscalingAlgorithm': 'NONE',
-            'usePublicIps': 'false',
-        },
-        gcp_conn_id='google_cloud_default',
-        xcom_element_list=[
-            {'xcom_key': 'MAX_UPD_TS',
-             'task_id': 'list_found_file',
-             'dataflow_par_name': 'inputFile'}],
-        dag=dag)
-
+    task_id='execute_dataflow',
+    jar='gs://dataflow_vangogh-231409/ppmo_dataflow-bundled-1.0.jar',
+    options={
+        'numWorkers': '1',
+        'workerMachineType': 'n1-standard-2',
+        'autoscalingAlgorithm': 'NONE',
+        'usePublicIps': 'false',
+    },
+    gcp_conn_id='google_cloud_default',
+    xcom_element_list=[
+        {'xcom_key': 'open_air_input_file_path',
+         'task_id': 'list_found_file',
+         'dataflow_par_name': 'inputFile'}],
+    dag=dag)
 
 delete_xcom_task >> list_found_file
-sense_gcs >> truncate_mysql_table
-sense_gcs >> list_found_file
+sense_gcs >> truncate_mysql_table >> load_dataflow
+sense_gcs >> list_found_file >> load_dataflow
+
 
 # except Exception as e:
 #     exc_type, exc_obj, exc_tb = sys.exc_info()
