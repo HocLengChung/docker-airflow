@@ -13,8 +13,7 @@ services:
             - POSTGRES_PASSWORD=airflow
             - POSTGRES_DB=airflow
             - POSTGRES_HOST=postgres
-            - POSTGRES_PORT=5432
-            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_PORT=5432            
             - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
             - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
         # Uncomment these lines to persist data on the local filesystem.
