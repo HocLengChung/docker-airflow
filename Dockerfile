@@ -74,6 +74,7 @@ COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
+RUN airflow connections --add --conn-id my_mssql --conn_uri mssql+pyodbc://sa:password@172.17.0.2
 
 EXPOSE 8080 5555 8793
 

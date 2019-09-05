@@ -45,7 +45,7 @@ try:
     SQL = 'TRUNCATE `ProjectTracker`.`OpenAirN`;'
 
     do_mysql = MySqlOperator(task_id='mysql',
-                             sql=SQL, mysql_conn_id='ppmp_mysql',
+                             sql=SQL, mysql_conn_id='ppmo_mysql',
                              database='ProjectTracker',
                              dag=dag)
 
