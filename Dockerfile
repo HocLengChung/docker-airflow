@@ -75,8 +75,15 @@ COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 ## JAVA INSTALLATION
-RUN apt-get update
-RUN apt-get install default-jre
+# install Java
+USER root
+RUN mkdir -p /usr/share/man/man1 && \
+    apt-get update -y && \
+    apt-get install -y openjdk-8-jdk
+
+RUN apt-get install unzip -y && \
+    apt-get autoremove -y
+
 
 EXPOSE 8080 5555 8793
 
