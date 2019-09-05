@@ -37,6 +37,7 @@ services:
             - POSTGRES_DB=airflow
             - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
             - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+            - GOOGLE_APPLICATION_CREDENTIALS="${AIRFLOW_USER_HOME}/vangogh-231409-732a35b7abf5.json"
         volumes:            
             - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
@@ -75,6 +76,7 @@ services:
             - LOAD_EX=n
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
             - EXECUTOR=Celery
+            - GOOGLE_APPLICATION_CREDENTIALS="${AIRFLOW_USER_HOME}/vangogh-231409-732a35b7abf5.json"
             # - POSTGRES_USER=airflow
             # - POSTGRES_PASSWORD=airflow
             # - POSTGRES_DB=airflow
@@ -93,6 +95,7 @@ services:
         environment:
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
             - EXECUTOR=Celery
+            - GOOGLE_APPLICATION_CREDENTIALS="${AIRFLOW_USER_HOME}/vangogh-231409-732a35b7abf5.json"
             # - POSTGRES_USER=airflow
             # - POSTGRES_PASSWORD=airflow
             # - POSTGRES_DB=airflow
