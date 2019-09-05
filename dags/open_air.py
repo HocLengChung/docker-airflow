@@ -23,7 +23,7 @@ default_args = {
     "retries": 1,
     "retry_delay": timedelta(minutes=5),
     'dataflow_default_options': {
-        'tempLocation': 'gs://dataflow-staging-europe-west1-984164108593/tmp/',
+        'stagingLocation': 'gs://dataflow-staging-europe-west1-984164108593/tmp/',
         'project': 'vangogh-231409',
         'region': 'europe-west1',
         'zone': 'europe-west1-b'
