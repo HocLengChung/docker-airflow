@@ -74,7 +74,7 @@ COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
-RUN apt-get update &&  apt install default-jre
+RUN apt-get update &&  apt install default-jre -y
 
 EXPOSE 8080 5555 8793
 
