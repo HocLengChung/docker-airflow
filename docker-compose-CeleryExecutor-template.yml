@@ -12,6 +12,12 @@ services:
             - POSTGRES_USER=airflow
             - POSTGRES_PASSWORD=airflow
             - POSTGRES_DB=airflow
+            - POSTGRES_HOST=postgres
+            - POSTGRES_PORT=5432
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+            - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+            - AIRFLOW__CORE__EXECUTOR=LocalExecutor
         # Uncomment these lines to persist data on the local filesystem.
         #     - PGDATA=/var/lib/postgresql/data/pgdata
         # volumes:
