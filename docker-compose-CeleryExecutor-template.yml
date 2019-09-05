@@ -40,6 +40,7 @@ services:
             - GOOGLE_APPLICATION_CREDENTIALS="/usr/local/airflow/vangogh-231409-732a35b7abf5.json"
         volumes:            
             - ./dags:/usr/local/airflow/dags
+            - ./keys:/usr/local/airflow/keys
             # Uncomment to include custom plugins
             - ./plugins:/usr/local/airflow/plugins
         ports:
@@ -70,6 +71,7 @@ services:
             - webserver
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - ./keys:/usr/local/airflow/keys
             # Uncomment to include custom plugins
             - ./plugins:/usr/local/airflow/plugins
         environment:
@@ -90,6 +92,7 @@ services:
             - scheduler
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - ./keys:/usr/local/airflow/keys
             # Uncomment to include custom plugins
             - ./plugins:/usr/local/airflow/plugins
         environment:
