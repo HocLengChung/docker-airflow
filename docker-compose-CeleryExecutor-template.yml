@@ -12,10 +12,6 @@ services:
             - POSTGRES_USER=airflow
             - POSTGRES_PASSWORD=airflow
             - POSTGRES_DB=airflow
-            - POSTGRES_HOST=postgres
-            - POSTGRES_PORT=5432            
-            - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
-            - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
         # Uncomment these lines to persist data on the local filesystem.
         #     - PGDATA=/var/lib/postgresql/data/pgdata
         # volumes:
@@ -30,11 +26,17 @@ services:
         environment:
             - LOAD_EX=n
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
-            - EXECUTOR=Celery            
+            - EXECUTOR=Celery
             # - POSTGRES_USER=airflow
             # - POSTGRES_PASSWORD=airflow
             # - POSTGRES_DB=airflow
             # - REDIS_PASSWORD=redispass
+            - POSTGRES_HOST=postgres
+            - POSTGRES_PORT=5432
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+            - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+            - AIRFLOW__CORE__EXECUTOR=LocalExecutor
         volumes:            
             - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
