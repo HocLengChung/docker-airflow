@@ -74,7 +74,7 @@ COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
-RUN apt-get update &&  add-apt-repository ppa:webupd8team/java && apt-get update && apt-get install -y oracle-java8-installer
+RUN apt-get update &&  apt install default-jre
 
 EXPOSE 8080 5555 8793
 
