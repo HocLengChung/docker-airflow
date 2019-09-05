@@ -4,7 +4,7 @@ from operators.gcs_list_operator import GoogleCloudStorageListOperator
 
 
 class HclEtlPlugin(AirflowPlugin):
-    name = "HclEtlPlugin"
+    name = "Custom"
     operators = [DataFlowJavaXcomKeysOperator, GoogleCloudStorageListOperator]
     # Leave in for explicitness
     hooks = []
