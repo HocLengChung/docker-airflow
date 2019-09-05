@@ -6,13 +6,11 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.contrib.sensors.gcs_sensor import GoogleCloudStoragePrefixSensor
 from airflow.operators.mysql_operator import MySqlOperator
-from airflow.contrib.operators.dataflow_operator import DataFlowJavaOperator
-from airflow.contrib.operators.gcs_list_operator import GoogleCloudStorageListOperator
-from airflow.operators.HclEtlPlugin.dataflow_xcom_operator import DataFlowJavaXcomKeysOperator
+from airflow.operators import DataFlowJavaXcomKeysOperator
+from airflow.operators import GoogleCloudStorageListOperator
 # from custom_operator.gcs_list_operator import GoogleCloudStorageListOperator
 from datetime import datetime, timedelta
 import sys, os
-custom_operator
 # try:
 
 default_args = {
@@ -53,26 +51,26 @@ truncate_mysql_table = MySqlOperator(
 #     prefix=prefix,
 #     dag=dag)
 # #
-# load_dataflow = DataFlowJavaXcomKeysOperator(
-#         task_id='execute_dataflow',
-#         jar='gs://dataflow_vangogh-231409/ppmo_dataflow-bundled-1.0.jar',
-#         options={
-#             'numWorkers': '1',
-#             'workerMachineType': 'n1-standard-2',
-#             'autoscalingAlgorithm': 'NONE',
-#             'usePublicIps': 'false',
-#         },
-#         gcp_conn_id='google_cloud_default',
-#         xcom_element_list=[
-#             {'xcom_key': 'MAX_UPD_TS',
-#              'task_id': 'list_found_file',
-#              'dataflow_par_name': 'inputFile'}],
-#         dag=dag)
+load_dataflow = DataFlowJavaXcomKeysOperator(
+        task_id='execute_dataflow',
+        jar='gs://dataflow_vangogh-231409/ppmo_dataflow-bundled-1.0.jar',
+        options={
+            'numWorkers': '1',
+            'workerMachineType': 'n1-standard-2',
+            'autoscalingAlgorithm': 'NONE',
+            'usePublicIps': 'false',
+        },
+        gcp_conn_id='google_cloud_default',
+        xcom_element_list=[
+            {'xcom_key': 'MAX_UPD_TS',
+             'task_id': 'list_found_file',
+             'dataflow_par_name': 'inputFile'}],
+        dag=dag)
 
 
 
 sense_gcs >> truncate_mysql_table
-sense_gcs >> list_found_file
+# sense_gcs >> list_found_file
 
 # except Exception as e:
 #     exc_type, exc_obj, exc_tb = sys.exc_info()
