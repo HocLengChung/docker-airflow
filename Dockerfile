@@ -75,14 +75,13 @@ COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 ## JAVA INSTALLATION
-RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
-RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" > /etc/apt/sources.list.d/webupd8team-java-trusty.list
-RUN apt-get update && apt-get install -y gnupg2 
-RUN apt-add-repository -r ppa:armagetronad-dev/ppa
-RUN apt update -q
-RUN add-apt-repository ppa:webupd8team/java && apt-get update
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes --no-install-recommends oracle-java8-installer && apt-get clean all
+apt-get update
+apt-get -y install software-properties-common
+add-apt-repository -y ppa:webupd8team/java
+echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
+apt-get update
+apt-get -y install oracle-java8-installer
 
 EXPOSE 8080 5555 8793
 
